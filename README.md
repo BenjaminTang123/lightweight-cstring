@@ -1,10 +1,10 @@
 # CString
-=Introduction:<br>
+= Introduction:<br>
 A String library implemented in C<br>
 It allows you to easily manipulate strings<br>
 (I really don't like the string Library of C language. Is there anyone like me?)<br>
 <br>
-=Explain:<br>
+= Explain:<br>
 This is a library I wrote when developing Tranquility programming language. The reason is that it's too troublesome to use C string when developing programming language<br>
 I think the operation is very simple. A few sentences of code can solve the problem of operating strings. Personally, it is very convenient :)<br>
 <br>
@@ -18,7 +18,7 @@ Main functions of the Library:<br>
 - Get string data<br>
 - Get string length<br>
 <br>
-=Example:<br>
+= Example:<br>
 1. Realize a simple storage and reading<br>
 ```C
 #include "string.h"
@@ -85,5 +85,5 @@ int main(){
 ```
 <br>
 
-=Feedback:<br>
+= Feedback:<br>
 If you have any questions, you can send an email to robotsteve@163.com
