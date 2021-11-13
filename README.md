@@ -33,7 +33,7 @@ int main(){
         printf("%s\n", getData(a));
 }
 ```
-<br>
+<br><br>
 2. Replace the contents of the string<br>
 ```C
 #include "string.h"
@@ -50,7 +50,7 @@ int main(){
         printf("%s\n", getData(a));
 }
 ```
-<br>
+<br><br>
 3. Find string position<br>
 ```C
 #include "string.h"
@@ -67,7 +67,7 @@ int main(){
         printf("%d\n", pos);
 }
 ```
-<br>
+<br><br>
 4. Get string length
 ```C
 #include "string.h"
@@ -83,7 +83,7 @@ int main(){
         printf("%d\n", length);
 }
 ```
-<br>
+<br><br>
 
 ### Feedback:<br>
 If you have any questions, you can send an email to robotsteve@163.com
