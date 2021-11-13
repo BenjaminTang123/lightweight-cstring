@@ -1,5 +1,5 @@
 # CString
-Introduction:<br>
+--Introduction:<br>
 A String library implemented in C<br>
 It allows you to easily manipulate strings<br>
 (I really don't like the string Library of C language. Is there anyone like me?)<br>
