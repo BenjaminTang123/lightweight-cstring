@@ -18,7 +18,7 @@ I think the operation is very simple. A few sentences of code can solve the prob
 - Get string data<br>
 - Get string length<br>
 <br>
-### Example:<br>
+### Some Example:<br>
 1. Realize a simple storage and reading<br>
 ```C
 #include "string.h"
