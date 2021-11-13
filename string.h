@@ -2,6 +2,7 @@
  * The string of C is too cumbersome,
  * So I wrote a string operation module,
  * This allows you to quickly manipulate string.
+ * Author: Robot_Steve
  
  * Functions: initStr, addStr, getData, find ,replace, len
 */
