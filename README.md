@@ -17,7 +17,7 @@ I think the operation is very simple. A few sentences of code can solve the prob
 - Clear the contents of the String class<br>
 - Get string data<br>
 - Get string length<br>
-<br>
+<br><br>
 ### Some Example:<br>
 1. Realize a simple storage and reading<br>
 ```C
