@@ -1,4 +1,4 @@
-# CString
+# LightweighCString
 ### Introduction:<br>
 A String library implemented in C<br>
 It allows you to easily manipulate strings<br>
@@ -21,7 +21,7 @@ I think the operation is very simple. A few sentences of code can solve the prob
 ### Some Example:<br>
 1. Realize a simple storage and reading<br>
 ```C
-#include "string.h"
+#include "LCString.h"
 
 int main(){
         string a = initStr();
@@ -36,7 +36,7 @@ int main(){
 <br><br>
 2. Replace the contents of the string<br>
 ```C
-#include "string.h"
+#include "LCString.h"
 
 int main(){
         string a = initStr();
@@ -53,7 +53,7 @@ int main(){
 <br><br>
 3. Find string position<br>
 ```C
-#include "string.h"
+#include "LCString.h"
 
 int main(){
         string a = initStr();
@@ -70,7 +70,7 @@ int main(){
 <br><br>
 4. Get string length
 ```C
-#include "string.h"
+#include "LCString.h"
 
 int main(){
         string a = initStr();
