@@ -9,7 +9,7 @@
 */
 
 string initStr(){
-	/* Initialize String */
+	/* Initialize the String */
 	string str;
 	
 	str.length = 1; // Set length of string
@@ -25,7 +25,7 @@ string initStr(){
 }
 
 string addChar(string str, char elem){
-	/* Add new char to string */
+	/* Add new char to the String */
 	str.stringData = (char*)realloc(str.stringData, (str.length+1)*sizeof(char)); // Reallocate
 	if(!str.stringData){
 		// Report Error
@@ -34,7 +34,7 @@ string addChar(string str, char elem){
 	}
 	
 	str.stringData[str.length-1] = elem;
-	str.stringData[str.length] = '\0';
+	str.stringData[str.length]   = '\0';
 	
 	str.length ++; // New length
 	
@@ -42,12 +42,12 @@ string addChar(string str, char elem){
 }
 
 string addStr(string str, char* elem){
-	/* Add new string to string */
+	/* Add new the String to the String */
 	while(*elem != '\0'){
 		// Add characters to the target string one by one
 		str = addChar(str, *elem);
 
-		// Traversal string
+		// Traversal the string
 		*elem ++;
 	}
 
@@ -63,46 +63,41 @@ string strCopy(string str){
 }
 
 char* getData(string str){
-	/* Get string data */
+	/* Get the string data */
 	return str.stringData;
 }
 
-int find(string str, char* findStr){
+int find(string Str, char* findStr){
 	/* Used to locate a string in the original data to determine its location */
-	char* oldstr = str.stringData; // Get old string
-	
-	char* intmeFind = findStr; // Help register variables to be found
-	
-	int position = 0; // Locate the location after
-	/* find variable:
-	 * - When the value is -1, it is absolutely not found
-	 * - When the value is 0,  it is relatively found
-	 * - When the value is 1,  it is absolutely found
-	*/
-	int find = 0; // whether the string was found
-	for(;*oldstr!='\0'; *oldstr++){
-		if(*oldstr == *intmeFind){
-			for(;*intmeFind!='\0';*intmeFind++){
-				if(*intmeFind != *oldstr){
-					// Restore the original value of the variable
-					intmeFind = findStr;
-					find = -1; // It is absolutely not found
+	char* str = Str.stringData;
+	char* alternate = findStr;
+
+	// The location of found. 
+	// When it is -1: No find
+	// When it is another value: found, and at this time it is the location of the record
+	int found = -1; 
+	printf("=====================================================\n");
+	printf("Check(debug): (findStr: %s)\n", findStr);
+	for(int pos=0; *str!='\0'; *str++){
+		printf("Check(debug): (pos: %d), (*str: %c), (str: %s)\n", pos, *str, str);
+		if(*str == *findStr){
+			found = pos; // Record the position first
+			for(; *findStr!='\0'; *findStr ++){
+				// One character is different
+				// Set to "Not found" and reset
+				if(*str != *findStr || *findStr == '\0'){
+					found = -1; findStr = alternate;
 					break;
 				}
-				*oldstr++;
+				*str ++;
 			}
-			if(find != -1) // Don't be absolutely not found
-				find = 1;
 		}
-		if(find == 1) // Be absolutely found
-			break;
-		position ++; // Position variable plus 1
+		pos ++;
 	}
-	if(find == 1) // Be absolutely found
-		// The position must be returned only in the absolutely found state
-		return position;
-	else
-		return -1; // If not found, -1 is returned
+	printf("Check(debug): (found: %d)\n", found);
+	printf("=====================================================\n");
+
+	return found;
 }
 
 string replace(string str, char* elem, char* newelem){
@@ -118,9 +113,10 @@ string replace(string str, char* elem, char* newelem){
 	
 	// The position of the string to replace
 	int pos = find(temp, elem);
+	printf("foundPos: %s - %d -%s-\n", getData(str), pos, elem);
 	
 	while(pos != -1){
-		// Old string
+		// The old string
 		char* oldStr = temp.stringData;
 
 		// Collects the characters before the target string
@@ -144,6 +140,8 @@ string replace(string str, char* elem, char* newelem){
 		newString  = clearStr(newString);
 		pos = find(temp, elem);
 	}
+
+	printf("temp: %s\n", getData(temp));
 	
 	return temp;
 }

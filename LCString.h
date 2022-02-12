@@ -28,7 +28,7 @@ string strCopy(string str);
 // Get string data
 char* getData(string str);
 // Used to locate a string in the original data to determine its location
-int find(string str, char* findStr);
+int find(string Str, char* findStr);
 // Replace the specified content in the original string with another string
 string replace(string str, char* elem, char* newelem);
 // Clear the contents of the String class
