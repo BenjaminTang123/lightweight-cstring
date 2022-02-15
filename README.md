@@ -31,6 +31,12 @@ int main(){
         // so you don't need to reference it anymore
 	// Get the string in a, Print the contents of a
         printf("%s\n", getData(a));
+	
+	// Small programs don't need to add this
+	// But the big program must add this!!!
+	free(a.stringData);
+	
+	return 0;
 }
 ```
 <br><br>
@@ -48,6 +54,12 @@ int main(){
 
         // Get the string in a, Print the contents of a
         printf("%s\n", getData(a));
+	
+	// Small programs don't need to add this
+	// But the big program must add this!!!
+	free(a.stringData);
+	
+	return 0;
 }
 ```
 <br><br>
@@ -65,6 +77,12 @@ int main(){
 
         // Print location
         printf("%d\n", pos);
+	
+	// Small programs don't need to add this
+	// But the big program must add this!!!
+	free(a.stringData);
+	
+	return 0;
 }
 ```
 <br><br>
@@ -81,6 +99,12 @@ int main(){
 
         // Print the length
         printf("%d\n", length);
+	
+	// Small programs don't need to add this
+	// But the big program must add this!!!
+	free(a.stringData);
+	
+	return 0;
 }
 ```
 <br><br>
