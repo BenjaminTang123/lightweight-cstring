@@ -34,7 +34,7 @@ int main(){
 	
 	// Small programs don't need to add this
 	// But the big program must add this!!!
-	free(a.stringData);
+	free(a);
 	
 	return 0;
 }
@@ -57,7 +57,7 @@ int main(){
 	
 	// Small programs don't need to add this
 	// But the big program must add this!!!
-	free(a.stringData);
+	free(a);
 	
 	return 0;
 }
@@ -80,7 +80,7 @@ int main(){
 	
 	// Small programs don't need to add this
 	// But the big program must add this!!!
-	free(a.stringData);
+	free(a);
 	
 	return 0;
 }
@@ -102,7 +102,7 @@ int main(){
 	
 	// Small programs don't need to add this
 	// But the big program must add this!!!
-	free(a.stringData);
+	free(a);
 	
 	return 0;
 }
