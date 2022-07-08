@@ -1,20 +1,20 @@
-#include "LCString.h"
-
-/* String Type: 
- * The string of C is too cumbersome,
- * So I wrote a string operation module,
- * This allows you to quickly manipulate string.
- *
- * Functions: initStr, addStr, getData, find ,replace, len
+/* File name: LCString.c
+ * Date: July 8th, 2022
+ * Author: Robot_Steve
+ * Description: implementation of all functions in the library.
 */
 
-string initStr(){
+#include "LCString.h"
+
+string initStr()
+{
 	/* Initialize the String */
 	string str;
 	
 	str.length = 1; // Set length of string
 	str.stringData = (char*)malloc(str.length*sizeof(char)); // Allocate dynamic memory
-	if(!str.stringData){
+	if(!str.stringData)
+	{
 		// Report Error
 		printf("OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
@@ -24,75 +24,82 @@ string initStr(){
 	return str;
 }
 
-string addChar(string str, char elem){
+void addChar(string *str, char elem)
+{
 	/* Add new char to the String */
-	str.stringData = (char*)realloc(str.stringData, (str.length+1)*sizeof(char)); // Reallocate
-	if(!str.stringData){
+	str->stringData = (char*)realloc(str->stringData, (str->length+1)*sizeof(char)); // Reallocate
+	if(!str->stringData)
+	{
 		// Report Error
 		printf("OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 	
-	str.stringData[str.length-1] = elem;
-	str.stringData[str.length]   = '\0';
+	str->stringData[str->length-1] = elem;
+	str->stringData[str->length]   = '\0';
 	
-	str.length ++; // New length
-
-	return str;
+	str->length ++; // New length
 }
 
-string addStr(string str, char* elem){
+void addStr(string *str, char *elem)
+{
 	/* Add new the String to the String */
-	int length; char* addElem = elem;
+	int length; char *addElem = elem;
 	for(length=0; *elem!='\0'; *elem++) length ++;
 	
-	str.stringData = (char*)realloc(str.stringData, (str.length+length+1)*sizeof(char));
-	if(!str.stringData){
+	str->stringData = (char*)realloc(str->stringData, (str->length+length+1)*sizeof(char));
+	if(!str->stringData)
+	{
 		printf("OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 
-	int i;
-	for(i=-1; length>i+1; i++){
-		str.stringData[str.length+i] = *addElem;
+	int i; for(i=-1; length>i+1; i++)
+	{
+		str->stringData[str->length+i] = *addElem;
 		*addElem ++; 
 	}
-	str.stringData[str.length+i] = '\0';
-	str.length += (i+1);
-
-	return str;
+	str->stringData[str->length+i] = '\0';
+	str->length += (i+1);
 }
 
-string strCopy(string str){
+string strCopy(const string *str)
+{
 	/* Copy a string object */
 	string newstr = initStr();
-	newstr = addStr(newstr, str.stringData);
+	addStr(&newstr, str->stringData);
 	
 	return newstr;
 }
 
-char* getData(string str){
+char *getData(const string *str)
+{
 	/* Get the string data */
-	return str.stringData;
+	return str->stringData;
 }
 
-int find(string Str, char* findStr){
+int find(const string *Str, char *findStr)
+{
 	/* Used to locate a string in the original data to determine its location */
-	char* str = Str.stringData;
-	char* alternate = findStr;
+	char *str = Str->stringData;
+	char *ALTERNATE = findStr;
 
 	// The location of found. 
 	// When it is -1: No find
 	// When it is another value: found, and at this time it is the location of the record
 	int found = -1; 
-	for(int pos=0; *str!='\0'; *str++){
-		if(*str == *findStr){
+	for(int pos=0; *str!='\0'; *str++)
+	{
+		if(*str == *findStr)
+		{
 			found = pos; // Record the position first
-			for(; *findStr!='\0'; *findStr ++){
+			for(; *findStr!='\0'; *findStr ++)
+			{
 				// One character is different
 				// Set to "Not found" and reset
-				if(*str != *findStr || *findStr == '\0'){
-					found = -1; findStr = alternate;
+				if(*str != *findStr || *findStr == '\0')
+				{
+					found = -1; findStr = ALTERNATE;
 					break;
 				}
 				*str ++;
@@ -104,7 +111,8 @@ int find(string Str, char* findStr){
 	return found;
 }
 
-string replace(string str, char* elem, char* newelem){
+void replace(string *str, char *elem, char *newelem)
+{
 	/* Replace the specified content in the original string with another string */
 	// Define a new String object
 	string newString  = initStr();
@@ -112,52 +120,63 @@ string replace(string str, char* elem, char* newelem){
 	string tempString = initStr();
 	
 	// New temporary variable
-	string temp    = str;
-	char* tempElem = elem;
+	string temp    = *str;
+	char *tempElem = elem;
 	
 	// The position of the string to replace
-	int pos = find(temp, elem);
+	int pos = find(&temp, elem);
 	
-	while(pos != -1){
+	while(pos != -1)
+	{
 		// The old string
-		char* oldStr = temp.stringData;
+		char *oldStr = temp.stringData;
 
 		// Collects the characters before the target string
-		for(;pos>0; pos--){
-			tempString = addChar(tempString, *oldStr);
+		for(; pos>0; pos--)
+		{
+			addChar(&tempString, *oldStr);
 			*oldStr ++;
 		}
-		newString  = addStr(newString, tempString.stringData);
-		newString  = addStr(newString, newelem);
+		addStr(&newString, tempString.stringData);
+		addStr(&newString, newelem);
 		// Restore the original value of the variable
-		tempString = clearStr(tempString); 
+		clearStr(&tempString); 
 		// Delete target string(The string to retrieve)
 		for(;*elem!='\0';*elem++) oldStr ++;	
 		
-		for(;*oldStr!='\0';*oldStr++) tempString = addChar(tempString, *oldStr);
-		newString = addStr(newString, tempString.stringData);
+		for(;*oldStr!='\0';*oldStr++) addChar(&tempString, *oldStr);
+		addStr(&newString, tempString.stringData);
 		
 		// Restore the original value of the variable
-		temp = strCopy(newString); elem = tempElem;
-		tempString = clearStr(tempString); 
-		newString  = clearStr(newString);
-		pos = find(temp, elem);
+		temp = strCopy(&newString); elem = tempElem;
+		clearStr(&tempString); 
+		clearStr(&newString);
+		pos = find(&temp, elem);
 	}
+
+	free(newString.stringData);
+	newString.stringData  = NULL;
+	free(tempString.stringData);
+	tempString.stringData = NULL;
 	
-	return temp;
+	*str = temp;
 }
 
-string clearStr(string str){
+void clearStr(string *str)
+{
 	/* Clear the contents of the String class */
 	string newstring = initStr();
 
-	free(str.stringData);
-	str.stringData = NULL;
+	free(str->stringData);
+	str->stringData = NULL;
 
-	return newstring;
+	*str = newstring;
 }
 
-int len(string str){
-	/* Get string length */
-	return str.length;
+int len(string *str)
+{
+	/* Get string length 
+	 * Include \0
+	*/
+	return str->length;
 }

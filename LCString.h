@@ -1,40 +1,37 @@
-/* String Type: 
- * The string of C is too cumbersome,
- * So I wrote a string operation module,
- * This allows you to quickly manipulate string.
- 
- * Functions: initStr, addStr, getData, find ,replace, len
+/* File name: LCString.h
+ * Date: July 8th, 2022
+ * Author: Robot_Steve
+ * Description: Header file containing functions in this library.
 */
+
+#include <stdlib.h>
+#include <stdio.h>
 
 #ifndef TyString_Header
 #define TyString_Header
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdarg.h>
-
 typedef struct String {
 	char* stringData;
-	int length;
+	unsigned int length;
 } string;
 
 // Initialize String
 string initStr();
 // Add new string to string
-string addStr(string str, char* elem);
+void addStr(string *str, char *elem);
 // Add new char to string
-string addChar(string str, char elem);
+void addChar(string *str, char elem);
 // Copy a string object
-string strCopy(string str);
+string strCopy(const string *str);
 // Get string data
-char* getData(string str);
+char* getData(const string *str);
 // Used to locate a string in the original data to determine its location
-int find(string Str, char* findStr);
+int find(const string *Str, char *findStr);
 // Replace the specified content in the original string with another string
-string replace(string str, char* elem, char* newelem);
+void replace(string *str, char *elem, char *newelem);
 // Clear the contents of the String class
-string clearStr(string str);
+void clearStr(string *str);
 // Get string length
-int len(string str);
+int len(string *str);
 
 #endif
