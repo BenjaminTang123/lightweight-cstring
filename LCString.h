@@ -1,5 +1,5 @@
 /* File name: LCString.h
- * Date: July 8th, 2022
+ * Last Modified Date: July 11th, 2022
  * Author: Robot_Steve
  * Description: Header file containing functions in this library.
 */
@@ -15,12 +15,16 @@ typedef struct String {
 	unsigned int length;
 } string;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Initialize String
 string initStr();
-// Add new string to string
-void addStr(string *str, char *elem);
 // Add new char to string
 void addChar(string *str, char elem);
+// Add new string to string
+void addStr(string *str, char *elem);
 // Copy a string object
 string strCopy(const string *str);
 // Get string data
@@ -33,5 +37,9 @@ void replace(string *str, char *elem, char *newelem);
 void clearStr(string *str);
 // Get string length
 int len(string *str);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
