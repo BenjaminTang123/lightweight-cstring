@@ -44,8 +44,8 @@ void addChar(string *str, char elem)
 void addStr(string *str, char *elem)
 {
 	/* Add new the String to the String */
-	int length; char *addElem = elem;
-	for(length=0; *elem!='\0'; *elem++) length ++;
+	unsigned int length; char *addElem = elem;
+	for(length=0; *elem!='\0'; elem++) length ++;
 	
 	str->stringData = (char*)realloc(str->stringData, (str->length+length+1)*sizeof(char));
 	if(!str->stringData)
@@ -54,10 +54,10 @@ void addStr(string *str, char *elem)
 		exit(0);
 	}
 
-	int i; for(i=-1; length>i+1; i++)
+	unsigned int i; for(i=-1; length>i+1; i++)
 	{
 		str->stringData[str->length+i] = *addElem;
-		*addElem ++; 
+		addElem ++; 
 	}
 	str->stringData[str->length+i] = '\0';
 	str->length += (i+1);
@@ -78,7 +78,7 @@ char *getData(const string *str)
 	return str->stringData;
 }
 
-int find(const string *Str, char *findStr)
+unsigned int find(const string *Str, char *findStr)
 {
 	/* Used to locate a string in the original data to determine its location */
 	char *str = Str->stringData;
@@ -87,13 +87,13 @@ int find(const string *Str, char *findStr)
 	// The location of found. 
 	// When it is -1: No find
 	// When it is another value: found, and at this time it is the location of the record
-	int found = -1; 
-	for(int pos=0; *str!='\0'; *str++)
+	unsigned int found = -1; 
+	for(unsigned int pos=0; *str!='\0'; str++)
 	{
 		if(*str == *findStr)
 		{
 			found = pos; // Record the position first
-			for(; *findStr!='\0'; *findStr ++)
+			for(; *findStr!='\0'; findStr ++)
 			{
 				// One character is different
 				// Set to "Not found" and reset
@@ -102,7 +102,7 @@ int find(const string *Str, char *findStr)
 					found = -1; findStr = ALTERNATE;
 					break;
 				}
-				*str ++;
+				str ++;
 			}
 		}
 		pos ++;
@@ -124,7 +124,7 @@ void replace(string *str, char *elem, char *newelem)
 	char *tempElem = elem;
 	
 	// The position of the string to replace
-	int pos = find(&temp, elem);
+	unsigned int pos = find(&temp, elem);
 	
 	while(pos != -1)
 	{
@@ -135,16 +135,16 @@ void replace(string *str, char *elem, char *newelem)
 		for(; pos>0; pos--)
 		{
 			addChar(&tempString, *oldStr);
-			*oldStr ++;
+			oldStr ++;
 		}
 		addStr(&newString, tempString.stringData);
 		addStr(&newString, newelem);
 		// Restore the original value of the variable
 		clearStr(&tempString); 
 		// Delete target string(The string to retrieve)
-		for(;*elem!='\0';*elem++) oldStr ++;	
+		for(; *elem!='\0'; elem++) oldStr ++;	
 		
-		for(;*oldStr!='\0';*oldStr++) addChar(&tempString, *oldStr);
+		for(; *oldStr!='\0'; oldStr++) addChar(&tempString, *oldStr);
 		addStr(&newString, tempString.stringData);
 		
 		// Restore the original value of the variable
@@ -162,6 +162,16 @@ void replace(string *str, char *elem, char *newelem)
 	*str = temp;
 }
 
+string splitStr(string *str, unsigned const int start, unsigned const int end)
+{
+	/* Cut the qualified string according to the position */
+	string finalString = initStr();
+	for(unsigned int position=start; position<=end; position++)
+		addChar(&finalString, str->stringData[position]);
+
+	return finalString;
+}
+
 void clearStr(string *str)
 {
 	/* Clear the contents of the String class */
@@ -173,7 +183,7 @@ void clearStr(string *str)
 	*str = newstring;
 }
 
-int len(string *str)
+unsigned int len(string *str)
 {
 	/* Get string length 
 	 * Include \0

@@ -30,13 +30,15 @@ string strCopy(const string *str);
 // Get string data
 char* getData(const string *str);
 // Used to locate a string in the original data to determine its location
-int find(const string *Str, char *findStr);
+unsigned int find(const string *Str, char *findStr);
 // Replace the specified content in the original string with another string
 void replace(string *str, char *elem, char *newelem);
+// Cut the qualified string according to the position
+string splitStr(string *str, unsigned const int start, unsigned const int end);
 // Clear the contents of the String class
 void clearStr(string *str);
 // Get string length
-int len(string *str);
+unsigned int len(string *str);
 
 #ifdef __cplusplus
 }
