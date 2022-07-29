@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 // Initialize String
-string initStr();
+string initStr(void);
 // Add new char to string
 void addChar(string *str, char elem);
 // Add new string to string

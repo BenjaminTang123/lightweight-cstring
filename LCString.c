@@ -6,7 +6,7 @@
 
 #include "LCString.h"
 
-string initStr()
+string initStr(void)
 {
 	/* Initialize the String */
 	string str;
