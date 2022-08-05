@@ -6,9 +6,12 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 #ifndef TyString_Header
 #define TyString_Header
+
+#define NO_FOUND (UINT_MAX-1)
 
 typedef struct String {
 	char* stringData;

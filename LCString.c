@@ -82,12 +82,12 @@ unsigned int find(const string *Str, char *findStr)
 {
 	/* Used to locate a string in the original data to determine its location */
 	char *str = Str->stringData;
-	char *ALTERNATE = findStr;
+	char *alternate = findStr;
 
 	// The location of found. 
 	// When it is -1: No find
 	// When it is another value: found, and at this time it is the location of the record
-	unsigned int found = -1; 
+	unsigned int found = NO_FOUND; 
 	for(unsigned int pos=0; *str!='\0'; str++)
 	{
 		if(*str == *findStr)
@@ -99,7 +99,7 @@ unsigned int find(const string *Str, char *findStr)
 				// Set to "Not found" and reset
 				if(*str != *findStr || *findStr == '\0')
 				{
-					found = -1; findStr = ALTERNATE;
+					found = NO_FOUND; findStr = alternate;
 					break;
 				}
 				str ++;
@@ -126,7 +126,7 @@ void replace(string *str, char *elem, char *newelem)
 	// The position of the string to replace
 	unsigned int pos = find(&temp, elem);
 	
-	while(pos != -1)
+	while(pos != NO_FOUND)
 	{
 		// The old string
 		char *oldStr = temp.stringData;
