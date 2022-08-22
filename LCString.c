@@ -167,56 +167,30 @@ string splitString(string *originStr, const unsigned int start, const unsigned i
 	return finalString;
 }
 
-void replaceString(string *originStr, char *element, char *newElement)
+void replaceString(string *originStr, char *originElement, char *newElement)
 {
 	/**
 	 * Replace the specified content in the original string with another string.
 	 */
 	
-	// Define a new String object
-	string newString  = initString();
-	// Temporary string
-	string tempString = initString();
-	
-	// New temporary variable
-	string temp    = *originStr;
-	char *tempElement = element;
-	
-	// The position of the string to replace
-	unsigned int pos = findString(&temp, element);
-	
-	while(pos != NO_FOUND)
-	{
-		// The old string
-		char *oldStr = temp.stringContent;
+	int originElementIndex = 0;
 
-		// Collects the characters before the target string
-		for(; pos>0; pos--)
-		{
-			addCharacter(&tempString, *oldStr);
-			oldStr ++;
-		}
-		addString(&newString, tempString.stringContent);
-		addString(&newString, newElement);
-		// Restore the original value of the variable
-		clearString(&tempString); 
-		// Delete target string(The string to retrieve)
-		for(; *element!='\0'; element++) oldStr ++;	
-		
-		for(; *oldStr!='\0'; oldStr++) addCharacter(&tempString, *oldStr);
-		addString(&newString, tempString.stringContent);
-		
-		// Restore the original value of the variable
-		temp = copyString(&newString); element = tempElement;
-		clearString(&tempString); 
-		clearString(&newString);
-		pos = findString(&temp, element);
-	}
+	// Get the length of originElement string.
+	for (; originElement[originElementIndex] != '\0'; originElementIndex++);
+	// Get the position of originElement string.
+	int originElementPosition = findString(originStr, originElement);
+	// Split the string before originElement string.
+	string newString = splitString(originStr, 0, originElementPosition-1);
+	// Split the string after originElement string.
+	string followingString = splitString(originStr, originElementPosition+originElementIndex, (originStr->length)-1);
 
-	free(newString.stringContent);
-	newString.stringContent  = NULL;
-	free(tempString.stringContent);
-	tempString.stringContent = NULL;
-	
-	*originStr = temp;
+	// Splice string.
+	addString(&newString, newElement);
+	addString(&newString, followingString.stringContent);
+
+	// Free dynamic memory
+	free(followingString.stringContent);
+	free(originStr->stringContent);
+
+	*originStr = newString;
 }
