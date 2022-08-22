@@ -72,6 +72,39 @@ void addString(string *originStr, char *elem)
 	originStr->length += (i+1);
 }
 
+unsigned int getLength(string *originStr)
+{
+	/**
+	 * Get string length.
+	 * Include \0.
+	 */
+
+	return originStr->length;
+}
+
+char *getString(const string *originStr)
+{
+	/**
+	 * Get the string content.
+	 */
+	
+	return originStr->stringContent;
+}
+
+void clearString(string *originStr)
+{
+	/**
+	 * Clear the contents of the string.
+	 */
+	
+	string newstring = initString();
+
+	free(originStr->stringContent);
+	originStr->stringContent = NULL;
+
+	*originStr = newstring;
+}
+
 string copyString(const string *originStr)
 {
 	/**
@@ -82,15 +115,6 @@ string copyString(const string *originStr)
 	addString(&newstr, originStr->stringContent);
 	
 	return newstr;
-}
-
-char *getString(const string *originStr)
-{
-	/**
-	 * Get the string content.
-	 */
-	
-	return originStr->stringContent;
 }
 
 unsigned int findString(const string *originStr, char *foundString)
@@ -128,6 +152,19 @@ unsigned int findString(const string *originStr, char *foundString)
 	}
 
 	return sign;
+}
+
+string splitString(string *originStr, const unsigned int start, const unsigned int end)
+{
+	/**
+	 * Cut the qualified string according to the position.
+	 */
+	
+	string finalString = initString();
+	for(unsigned int position=start; position<=end; position++)
+		addCharacter(&finalString, originStr->stringContent[position]);
+
+	return finalString;
 }
 
 void replaceString(string *originStr, char *element, char *newElement)
@@ -182,41 +219,4 @@ void replaceString(string *originStr, char *element, char *newElement)
 	tempString.stringContent = NULL;
 	
 	*originStr = temp;
-}
-
-string splitString(string *originStr, unsigned const int start, unsigned const int end)
-{
-	/**
-	 * Cut the qualified string according to the position.
-	 */
-	
-	string finalString = initString();
-	for(unsigned int position=start; position<=end; position++)
-		addCharacter(&finalString, originStr->stringContent[position]);
-
-	return finalString;
-}
-
-void clearString(string *originStr)
-{
-	/**
-	 * Clear the contents of the String class.
-	 */
-	
-	string newstring = initString();
-
-	free(originStr->stringContent);
-	originStr->stringContent = NULL;
-
-	*originStr = newstring;
-}
-
-unsigned int getLength(string *originStr)
-{
-	/**
-	 * Get string length.
-	 * Include \0.
-	 */
-
-	return originStr->length;
 }

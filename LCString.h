@@ -22,26 +22,27 @@ typedef struct String {
 extern "C" {
 #endif
 
-// Initialize String
+// Initialize the string structure.
 string initString(void);
-// Add new char to string
+// Add new char to the origin string.
 void addCharacter(string *, char);
-// Add new string to string
+// Add new string to the origin string.
 void addString(string *, char *);
-// Copy a string object
-string copyString(const string *);
-// Get string data
-char *getString(const string *);
-// Used to locate a string in the original data to determine its location
-unsigned int findString(const string *, char *);
-// Replace the specified content in the original string with another string
-void replaceString(string *, char *, char *);
-// Cut the qualified string according to the position
-string splitString(string *, unsigned const int, unsigned const int);
-// Clear the contents of the String class
-void clearString(string *);
-// Get string length
+// Get string length.
 unsigned int getLength(string *);
+// Get the string content.
+char *getString(const string *);
+// Clear the contents of the string.
+void clearString(string *);
+// Copy string.
+string copyString(const string *);
+// Used to locate a string in the original data to determine its location.
+unsigned int findString(const string *, char *);
+// Cut the qualified string according to the position
+string splitString(string *, const unsigned int, const unsigned int);
+// Replace the specified content in the original string with another string.
+void replaceString(string *, char *, char *);
+
 
 #ifdef __cplusplus
 }
