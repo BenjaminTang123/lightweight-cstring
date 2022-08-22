@@ -11,10 +11,10 @@
 #ifndef TyString_Header
 #define TyString_Header
 
-#define NO_FOUND (UINT_MAX-1)
+#define NO_FOUND (UINT_MAX)
 
 typedef struct String {
-	char* stringData;
+	char* stringContent;
 	unsigned int length;
 } string;
 
