@@ -169,7 +169,7 @@ void replaceString(string *originStr, char *element, char *newElement)
 		addString(&newString, tempString.stringData);
 		
 		// Restore the original value of the variable
-		temp = strCopy(&newString); element = tempElement;
+		temp = copyString(&newString); element = tempElement;
 		clearString(&tempString); 
 		clearString(&newString);
 		pos = findString(&temp, element);
@@ -216,6 +216,6 @@ unsigned int getLength(string *originStr)
 	 * Get string length.
 	 * Include \0.
 	 */
-	
+
 	return originStr->length;
 }
