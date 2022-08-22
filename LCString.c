@@ -9,46 +9,46 @@
 string initStr(void)
 {
 	/* Initialize the String */
-	string str;
+	string originStr;
 	
-	str.length = 1; // Set length of string
-	str.stringData = (char*)malloc(str.length*sizeof(char)); // Allocate dynamic memory
-	if(!str.stringData)
+	originStr.length = 1; // Set length of string
+	originStr.stringData = (char*)malloc(originStr.length*sizeof(char)); // Allocate dynamic memory
+	if(!originStr.stringData)
 	{
 		// Report Error
 		printf("OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
-	str.stringData[0] = '\0'; // End symbol
+	originStr.stringData[0] = '\0'; // End symbol
 
-	return str;
+	return originStr;
 }
 
-void addChar(string *str, char elem)
+void addChar(string *originStr, char elem)
 {
 	/* Add new char to the String */
-	str->stringData = (char*)realloc(str->stringData, (str->length+1)*sizeof(char)); // Reallocate
-	if(!str->stringData)
+	originStr->stringData = (char*)realloc(originStr->stringData, (originStr->length+1)*sizeof(char)); // Reallocate
+	if(!originStr->stringData)
 	{
 		// Report Error
 		printf("OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 	
-	str->stringData[str->length-1] = elem;
-	str->stringData[str->length]   = '\0';
+	originStr->stringData[originStr->length-1] = elem;
+	originStr->stringData[originStr->length]   = '\0';
 	
-	str->length ++; // New length
+	originStr->length ++; // New length
 }
 
-void addStr(string *str, char *elem)
+void addStr(string *originStr, char *elem)
 {
 	/* Add new the String to the String */
 	unsigned int length; char *addElem = elem;
 	for(length=0; *elem!='\0'; elem++) length ++;
 	
-	str->stringData = (char*)realloc(str->stringData, (str->length+length+1)*sizeof(char));
-	if(!str->stringData)
+	originStr->stringData = (char*)realloc(originStr->stringData, (originStr->length+length+1)*sizeof(char));
+	if(!originStr->stringData)
 	{
 		printf("OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
@@ -56,32 +56,32 @@ void addStr(string *str, char *elem)
 
 	unsigned int i; for(i=-1; length>i+1; i++)
 	{
-		str->stringData[str->length+i] = *addElem;
+		originStr->stringData[originStr->length+i] = *addElem;
 		addElem ++; 
 	}
-	str->stringData[str->length+i] = '\0';
-	str->length += (i+1);
+	originStr->stringData[originStr->length+i] = '\0';
+	originStr->length += (i+1);
 }
 
-string strCopy(const string *str)
+string strCopy(const string *originStr)
 {
 	/* Copy a string object */
 	string newstr = initStr();
-	addStr(&newstr, str->stringData);
+	addStr(&newstr, originStr->stringData);
 	
 	return newstr;
 }
 
-char *getData(const string *str)
+char *getData(const string *originStr)
 {
 	/* Get the string data */
-	return str->stringData;
+	return originStr->stringData;
 }
 
-unsigned int find(const string *Str, char *findStr)
+unsigned int find(const string *originStr, char *findStr)
 {
 	/* Used to locate a string in the original data to determine its location */
-	char *str = Str->stringData;
+	char *str = originStr->stringData;
 	char *alternate = findStr;
 
 	// The location of found. 
@@ -111,7 +111,7 @@ unsigned int find(const string *Str, char *findStr)
 	return found;
 }
 
-void replace(string *str, char *elem, char *newelem)
+void replace(string *originStr, char *element, char *newElement)
 {
 	/* Replace the specified content in the original string with another string */
 	// Define a new String object
@@ -120,11 +120,11 @@ void replace(string *str, char *elem, char *newelem)
 	string tempString = initStr();
 	
 	// New temporary variable
-	string temp    = *str;
-	char *tempElem = elem;
+	string temp    = *originStr;
+	char *tempElement = element;
 	
 	// The position of the string to replace
-	unsigned int pos = find(&temp, elem);
+	unsigned int pos = find(&temp, element);
 	
 	while(pos != NO_FOUND)
 	{
@@ -138,20 +138,20 @@ void replace(string *str, char *elem, char *newelem)
 			oldStr ++;
 		}
 		addStr(&newString, tempString.stringData);
-		addStr(&newString, newelem);
+		addStr(&newString, newElement);
 		// Restore the original value of the variable
 		clearStr(&tempString); 
 		// Delete target string(The string to retrieve)
-		for(; *elem!='\0'; elem++) oldStr ++;	
+		for(; *element!='\0'; element++) oldStr ++;	
 		
 		for(; *oldStr!='\0'; oldStr++) addChar(&tempString, *oldStr);
 		addStr(&newString, tempString.stringData);
 		
 		// Restore the original value of the variable
-		temp = strCopy(&newString); elem = tempElem;
+		temp = strCopy(&newString); element = tempElement;
 		clearStr(&tempString); 
 		clearStr(&newString);
-		pos = find(&temp, elem);
+		pos = find(&temp, element);
 	}
 
 	free(newString.stringData);
@@ -159,34 +159,34 @@ void replace(string *str, char *elem, char *newelem)
 	free(tempString.stringData);
 	tempString.stringData = NULL;
 	
-	*str = temp;
+	*originStr = temp;
 }
 
-string splitStr(string *str, unsigned const int start, unsigned const int end)
+string splitStr(string *originStr, unsigned const int start, unsigned const int end)
 {
 	/* Cut the qualified string according to the position */
 	string finalString = initStr();
 	for(unsigned int position=start; position<=end; position++)
-		addChar(&finalString, str->stringData[position]);
+		addChar(&finalString, originStr->stringData[position]);
 
 	return finalString;
 }
 
-void clearStr(string *str)
+void clearStr(string *originStr)
 {
 	/* Clear the contents of the String class */
 	string newstring = initStr();
 
-	free(str->stringData);
-	str->stringData = NULL;
+	free(originStr->stringData);
+	originStr->stringData = NULL;
 
-	*str = newstring;
+	*originStr = newstring;
 }
 
-unsigned int len(string *str)
+unsigned int len(string *originStr)
 {
 	/* Get string length 
 	 * Include \0
 	*/
-	return str->length;
+	return originStr->length;
 }

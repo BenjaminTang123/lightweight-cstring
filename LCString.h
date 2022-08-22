@@ -25,23 +25,23 @@ extern "C" {
 // Initialize String
 string initStr(void);
 // Add new char to string
-void addChar(string *str, char elem);
+void addChar(string *, char);
 // Add new string to string
-void addStr(string *str, char *elem);
+void addStr(string *, char *);
 // Copy a string object
-string strCopy(const string *str);
+string strCopy(const string *);
 // Get string data
-char* getData(const string *str);
+char* getData(const string *);
 // Used to locate a string in the original data to determine its location
-unsigned int find(const string *Str, char *findStr);
+unsigned int find(const string *, char *);
 // Replace the specified content in the original string with another string
-void replace(string *str, char *elem, char *newelem);
+void replace(string *, char *, char *);
 // Cut the qualified string according to the position
-string splitStr(string *str, unsigned const int start, unsigned const int end);
+string splitStr(string *, unsigned const int, unsigned const int);
 // Clear the contents of the String class
-void clearStr(string *str);
+void clearStr(string *);
 // Get string length
-unsigned int len(string *str);
+unsigned int len(string *);
 
 #ifdef __cplusplus
 }
