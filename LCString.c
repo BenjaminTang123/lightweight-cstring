@@ -162,7 +162,9 @@ string splitString(string *originString, const unsigned int start, const unsigne
 	
 	string finalString = initString();
 	for(unsigned int position=start; position<=end; position++)
-		addCharacter(&finalString, originString->stringContent[position]);
+	{
+		addCharacter(&finalString, (originString->stringContent)[position]);
+	}
 
 	return finalString;
 }
@@ -174,18 +176,22 @@ bool replaceString(string *originString, char *originElement, char *newElement)
 	 */
 	
 	int originElementIndex = 0;
+	string newString;
+	string followingString;
 
-	// Get the length of originElement string.
-	for (; originElement[originElementIndex] != '\0'; originElementIndex++);
 	// Get the position of originElement string.
 	int originElementPosition = findString(originString, originElement);
 	if (originElementPosition == NO_FOUND) 
 		return false;
+	// Get the length of originElement string.
+	for (; originElement[originElementIndex] != '\0'; originElementIndex++);
 	// Split the string before originElement string.
-	string newString = splitString(originString, 0, originElementPosition-1);
+	if (originElementPosition == 0)
+		newString = initString();
+	else
+		newString = splitString(originString, 0, originElementPosition);
 	// Split the string after originElement string.
-	string followingString = splitString(originString, originElementPosition+originElementIndex, (originString->length)-1);
-
+	followingString = splitString(originString, originElementPosition+originElementIndex, (originString->length)-1);
 	// Splice string.
 	addString(&newString, newElement);
 	addString(&newString, followingString.stringContent);
@@ -193,6 +199,7 @@ bool replaceString(string *originString, char *originElement, char *newElement)
 	// Free dynamic memory
 	free(followingString.stringContent);
 	free(originString->stringContent);
+	
 
 	*originString = newString;
 
