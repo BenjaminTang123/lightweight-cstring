@@ -1,12 +1,13 @@
 /* File name: LCString.h
- * Last Modified Date: August 23th, 2022
- * Author: RobotSteveHa
+ * Last Modified Date: August 24th, 2022
+ * Author: RobotBenjaminTang
  * Description: Header file containing functions in this library.
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
+#include <stdbool.h>
 
 #ifndef TyString_Header
 #define TyString_Header
@@ -41,7 +42,7 @@ unsigned int findString(const string *, char *);
 // Cut the qualified string according to the position
 string splitString(string *, const unsigned int, const unsigned int);
 // Replace the specified content in the original string with another string.
-void replaceString(string *, char *, char *);
+bool replaceString(string *, char *, char *);
 
 
 #ifdef __cplusplus

@@ -1,6 +1,6 @@
 /* File name: LCString.c
- * Last Modified Date: August 23th, 2022
- * Author: RobotSteveHa
+ * Last Modified Date: August 24th, 2022
+ * Author: RobotBenjaminTang
  * Description: implementation of all functions in the library.
 */
 
@@ -167,7 +167,7 @@ string splitString(string *originString, const unsigned int start, const unsigne
 	return finalString;
 }
 
-void replaceString(string *originString, char *originElement, char *newElement)
+bool replaceString(string *originString, char *originElement, char *newElement)
 {
 	/**
 	 * Replace the specified content in the original string with another string.
@@ -179,6 +179,8 @@ void replaceString(string *originString, char *originElement, char *newElement)
 	for (; originElement[originElementIndex] != '\0'; originElementIndex++);
 	// Get the position of originElement string.
 	int originElementPosition = findString(originString, originElement);
+	if (originElementPosition == NO_FOUND) 
+		return false;
 	// Split the string before originElement string.
 	string newString = splitString(originString, 0, originElementPosition-1);
 	// Split the string after originElement string.
@@ -193,4 +195,6 @@ void replaceString(string *originString, char *originElement, char *newElement)
 	free(originString->stringContent);
 
 	*originString = newString;
+
+	return true;
 }
