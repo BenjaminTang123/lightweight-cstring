@@ -1,6 +1,6 @@
 /* File name: LCString.c
  * Last Modified Date: August 23th, 2022
- * Author: Robot_Steve
+ * Author: RobotSteveHa
  * Description: implementation of all functions in the library.
 */
 

@@ -1,6 +1,6 @@
 /* File name: LCString.h
  * Last Modified Date: August 23th, 2022
- * Author: Robot_Steve
+ * Author: RobotSteveHa
  * Description: Header file containing functions in this library.
 */
 
