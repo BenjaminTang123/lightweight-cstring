@@ -112,5 +112,59 @@ That value is often `LCString.h` - `NO_FOUND`. This value is used to mark not fo
 
 # Examples
 
-```
+```C
+#include "LCString.h"
+
+int main()
+{
+    string originalString = initString();
+    int pos;
+
+    addString(&originalString, "hello, world");
+    addCharacter(&originalString, '!');
+
+    printf("#1 originalString: `%s`\n", getString(&originalString));
+
+    pos = findString(&originalString, "llo");
+    if (pos != NO_FOUND) 
+    {
+        printf("#2 found it! the position in original string is %d!\n", pos);
+    } 
+    else 
+    {
+        printf("#3 no found...\n");
+    }
+
+    replaceString(&originalString, "hello, ", "Good morning, ");
+
+    printf("#4 originalString: `%s`\n", getString(&originalString));
+
+    pos = findString(&originalString, "worldd");
+    if (pos != NO_FOUND) 
+    {
+        printf("#5 found it! the position in original string is %d!\n", pos);
+    } 
+    else 
+    {
+        printf("#6 no found...\n");
+    }
+
+    printf("#7 The string length is %d.\n", getLength(&originalString));
+
+    string hello = splitString(&originalString, 0, 11);
+    printf("#8 The string content of variable hello is `%s`.\n", getString(&hello));
+    
+    clearString(&originalString);
+    addString(&originalString, "original string");
+
+    printf("#9 Its content is: `%s`\n", getString(&originalString));
+
+    originalString = copyString(&hello);
+    printf("#10 Its content is: `%s`\n", getString(&originalString));
+
+    free(originalString.stringContent);
+    free(hello.stringContent);
+
+    return 0;
+}
 ```
