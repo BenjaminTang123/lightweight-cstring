@@ -1,7 +1,7 @@
 # LightweighCString
 
 A string operation library based on C language. \
-It is characterized by . \
+It is characterized by lightweight, easy to expand and easy to use. \
 It can complete some basic operations on strings.
 
 - [LightweighCString](#lightweighcstring)
