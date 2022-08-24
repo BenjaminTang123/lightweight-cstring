@@ -1,0 +1,7 @@
+JAVADOC_AUTOBRIEF   = YES
+PROJECT_NAME        = LightweightCString
+PROJECT_BRIEF       = A light-weight C string library.
+OUTPUT_DIRECTORY    = doc
+CREATE_SUBDIRS      = YES
+INPUT               = dist/include
+GENERATE_HTML       = YES

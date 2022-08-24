@@ -1,0 +1,55 @@
+\hypertarget{_l_c_string_8h_source}{}\doxysection{LCString.\+h}
+\label{_l_c_string_8h_source}\index{dist/include/LCString.h@{dist/include/LCString.h}}
+\mbox{\hyperlink{_l_c_string_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <limits.h>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <stdbool.h>}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#ifndef TyString\_Header}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#define TyString\_Header}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#define NO\_FOUND (UINT\_MAX)}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{23 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{struct_string}{String}} \{}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{28     \textcolor{keywordtype}{char}* \mbox{\hyperlink{struct_string_a9763b75fd20b1cee5a55dd3a876634c1}{stringContent}};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_string_a811a9638d922abb8ea9d28773d474fea}{length}};}
+\DoxyCodeLine{34 \} \mbox{\hyperlink{_l_c_string_8h_a189bf01e32c7a257515f000cec96b78f}{string}};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#ifdef \_\_cplusplus}}
+\DoxyCodeLine{37 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{44 \textcolor{keywordtype}{string} \mbox{\hyperlink{_l_c_string_8h_a85f36a38dccc9a8e0dd476708ac13158}{initString}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{51 \textcolor{keywordtype}{void} \mbox{\hyperlink{_l_c_string_8h_a60bf88ab8966fb75c24044379b01c0ff}{addCharacter}}(\textcolor{keywordtype}{string} * self, \textcolor{keywordtype}{char} c);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{59 \textcolor{keywordtype}{void} \mbox{\hyperlink{_l_c_string_8h_a66a165c9a26a0221dd973c00f2227d46}{addString}}(\textcolor{keywordtype}{string} * self, \textcolor{keyword}{const} \textcolor{keywordtype}{char} * str);}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{66 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{_l_c_string_8h_a7708d4b7c0b610de8139ef8b9aa6a3fc}{getLength}}(\textcolor{keywordtype}{string} * self);}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{74 \textcolor{keywordtype}{char} *\mbox{\hyperlink{_l_c_string_8h_a82f552230427acde0ffe50fdebadcae5}{getString}}(\textcolor{keyword}{const} \textcolor{keywordtype}{string} * self);}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{80 \textcolor{keywordtype}{void} \mbox{\hyperlink{_l_c_string_8h_a0ad4b96b531be2d48eb04bf4c1e2efe6}{clearString}}(\textcolor{keywordtype}{string} * self);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{87 \textcolor{keywordtype}{string} \mbox{\hyperlink{_l_c_string_8h_a2a32409d226e7618b6e6ec2ceab89ac8}{copyString}}(\textcolor{keyword}{const} \textcolor{keywordtype}{string} * self);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{96 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{_l_c_string_8h_ab3e7d8abf62b650638ecaebf0f6fd937}{findString}}(\textcolor{keyword}{const} \textcolor{keywordtype}{string} * self, \textcolor{keywordtype}{char} * str);}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{105 \textcolor{keywordtype}{string} \mbox{\hyperlink{_l_c_string_8h_a475e4821a7542c109358f8497ff41dfe}{splitString}}(\textcolor{keywordtype}{string} * self, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} begin, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} end);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{114 \textcolor{keywordtype}{bool} \mbox{\hyperlink{_l_c_string_8h_ae8ecd4bc7d9687baf8a10ed5548d039e}{replaceString}}(\textcolor{keywordtype}{string} * self, \textcolor{keywordtype}{char} * pattern\_to\_match, \textcolor{keywordtype}{char} * pattern\_to\_replace);}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#ifdef \_\_cplusplus}}
+\DoxyCodeLine{118 \}}
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
