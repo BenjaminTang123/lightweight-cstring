@@ -108,7 +108,7 @@ All OSErrors in this library are due to dynamic memory application exceptions. G
 
 ### Why is the value returned by find() a value much larger than the length of the string?
 
-That value is often `LCString.h` - `NO_FOUND`. This value is used to mark not found. However, if this value does not match the value of `NO_FOUND`, there may be some problems. You can choose to report this problem. Thank you.
+That value is often the macro in `LCString.h` - `NO_FOUND`. This value is used to mark not found. However, if this value does not match the value of `NO_FOUND`, there may be some problems. You can choose to report this problem. Thank you.
 
 # Examples
 
