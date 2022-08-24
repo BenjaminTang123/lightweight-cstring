@@ -5,6 +5,7 @@ It is characterized by lightweight, easy to expand and easy to use. \
 It can complete some basic operations on strings.
 
 - [LightweighCString](#lightweighcstring)
+- [Build](#build)
 - [Overview](#overview)
 - [Detailed](#detailed)
   - [String Structure](#string-structure)
@@ -21,6 +22,16 @@ It can complete some basic operations on strings.
     - [What happens if OSError is reported?](#what-happens-if-oserror-is-reported)
     - [Why is the value returned by find() far greater than the length of the string?](#why-is-the-value-returned-by-find-far-greater-than-the-length-of-the-string)
 - [Example](#example)
+
+# Build
+Use the following command in the project directory to build the library. The built target will be in the `dist/` directory:
+```
+make
+```
+Use the following command in the project directory to build the API documentation (HTML). `doxygen` should be installed in your machine to generate the documentation.
+```
+make doxygen
+```
 
 # Overview 
 
