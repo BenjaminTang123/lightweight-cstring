@@ -18,8 +18,7 @@ string initString(void)
 	originString.stringContent = (char*)malloc(originString.length*sizeof(char)); // Allocate dynamic memory
 	if(!originString.stringContent)
 	{
-		// Report Error
-		printf("OSError: An unexpected error occurred at runtime!\n");
+		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n\n");
 		exit(0);
 	}
 	originString.stringContent[0] = '\0'; // End symbol
@@ -36,8 +35,7 @@ void addCharacter(string *originString, char element)
 	originString->stringContent = (char*)realloc(originString->stringContent, (originString->length+1)*sizeof(char)); // Reallocate
 	if(!originString->stringContent)
 	{
-		// Report Error
-		printf("OSError: An unexpected error occurred at runtime!\n");
+		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n\n");
 		exit(0);
 	}
 	
@@ -59,7 +57,7 @@ void addString(string *originString, const char *element)
 	originString->stringContent = (char*)realloc(originString->stringContent, (originString->length+length+1)*sizeof(char));
 	if(!originString->stringContent)
 	{
-		printf("OSError: An unexpected error occurred at runtime!\n");
+		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n\n");
 		exit(0);
 	}
 
