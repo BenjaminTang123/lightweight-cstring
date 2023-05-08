@@ -9,11 +9,26 @@
 #include <limits.h>
 #include <stdbool.h>
 
-#ifndef TyString_Header
-#define TyString_Header
+#ifndef LCString
+#define LCString
 
+#ifndef NO_FOUND
+#ifndef __POS_TYPE
+#ifndef __FIXED_SIZE
 /// A constant that will be returned by `findString()` if we can't find the substring.
-#define NO_FOUND (UINT_MAX)
+#define NO_FOUND (LONG_MAX-1)
+/// Character position.
+#define __POS_TYPE unsigned long int
+typedef __POS_TYPE position;
+/// One time fixed pre allocation allocation size.
+#define __FIXED_SIZE 5
+#endif /* NO_FOUND */
+#endif /* __POS_TYPE */
+#endif /* __FIXED_SIZE */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * A data structure that stores a String.
@@ -28,14 +43,15 @@ typedef struct String {
 	char* stringContent;
 
 	/**
+	 * To manage the actual allocated memory size.
+	 */
+	size_t capacity;
+
+	/**
 	 * The length of the string.
 	 */
-	unsigned int length;
+	size_t length;
 } string;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /**
  * Construct an empty string.
@@ -63,7 +79,7 @@ void addString(string * self, const char * str);
  * @param self The string object.
  * @returns The length of the string object.
  */
-unsigned int getLength(string * self);
+size_t getLength(string * self);
 
 /**
  * Get the string object's inner content.
@@ -93,7 +109,7 @@ string copyString(const string * self);
  * @param str The substring to find.
  * @returns The location of the substring. If there are multiple matches, the first will be returned. If nothing matches, `NO_FOUND` will be returned.
 */
-unsigned int findString(const string * self, char * str);
+position findString(const string * self, char * str);
 
 /**
  * Get the substring of the given string object with a range [begin, end].
@@ -102,7 +118,7 @@ unsigned int findString(const string * self, char * str);
  * @param end The ending of the closed-range.
  * @returns The splitted substring.
  */
-string splitString(string * self, const unsigned int begin, const unsigned int end);
+string splitString(string * self, const position begin, const position end);
 
 /**
  * Replace the specified content in the original string with another string.

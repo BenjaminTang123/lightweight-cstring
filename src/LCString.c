@@ -4,7 +4,7 @@
  * Description: implementation of all functions in the library.
 */ 
 
-#include "LCString.h"
+#include "lcstring.h"
 
 string initString(void)
 {
@@ -13,16 +13,15 @@ string initString(void)
 	 */
 
 	string originString;
-	
 	originString.length = 1; // Set length of string
 	originString.stringContent = (char*)malloc(originString.length*sizeof(char)); // Allocate dynamic memory
-	if(!originString.stringContent)
+	if (!originString.stringContent)
 	{
-		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n\n");
+		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 	originString.stringContent[0] = '\0'; // End symbol
-
+	
 	return originString;
 }
 
@@ -33,9 +32,9 @@ void addCharacter(string *originString, char element)
 	 */
 
 	originString->stringContent = (char*)realloc(originString->stringContent, (originString->length+1)*sizeof(char)); // Reallocate
-	if(!originString->stringContent)
+	if (!originString->stringContent)
 	{
-		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n\n");
+		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 	
@@ -51,17 +50,16 @@ void addString(string *originString, const char *element)
 	 * Add new string to the origin string.
 	 */
 
-	unsigned int length; const char *addElement = element;
-	for(length=0; *element!='\0'; element++) length ++;
-	
+	size_t length; const char *addElement = element;
+	for (length=0; *element!='\0'; element++) length ++;
 	originString->stringContent = (char*)realloc(originString->stringContent, (originString->length+length+1)*sizeof(char));
-	if(!originString->stringContent)
+	if (!originString->stringContent)
 	{
-		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n\n");
+		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 
-	unsigned int i; for(i=-1; length>i+1; i++)
+	size_t i; for (i=-1; length>i+1; i++)
 	{
 		originString->stringContent[originString->length+i] = *addElement;
 		addElement ++; 
@@ -70,7 +68,7 @@ void addString(string *originString, const char *element)
 	originString->length += (i+1);
 }
 
-unsigned int getLength(string *originString)
+inline size_t getLength(string *originString)
 {
 	/**
 	 * Get string length.
@@ -80,7 +78,7 @@ unsigned int getLength(string *originString)
 	return originString->length;
 }
 
-char *getString(const string *originString)
+inline char *getString(const string *originString)
 {
 	/**
 	 * Get the string content.
@@ -89,7 +87,7 @@ char *getString(const string *originString)
 	return originString->stringContent;
 }
 
-void clearString(string *originString)
+inline void clearString(string *originString)
 {
 	/**
 	 * Clear the contents of the string.
@@ -103,7 +101,7 @@ void clearString(string *originString)
 	*originString = newstring;
 }
 
-string copyString(const string *originString)
+inline string copyString(const string *originString)
 {
 	/**
 	 * Copy string.
@@ -115,19 +113,20 @@ string copyString(const string *originString)
 	return newstr;
 }
 
-unsigned int findString(const string *originString, char *foundString)
+
+position findString(const string *originString, char *foundString)
 {
 	/**
 	 * Used to locate a string in the original data to determine its location.
 	 */
 	
 	char *stringContent = originString->stringContent;
-	unsigned int length = originString->length;
+	position length = originString->length;
 
 	// Records the position when the stringContent matches the first character of the string to be searched.
-	unsigned int sign = NO_FOUND;
+	position sign = NO_FOUND;
 	// variable index represents the position of traversing to stringContent.
-	for (unsigned int index=0; ; index++) 
+	for (position index=0; ; index++) 
 	{
 		// If the index reaches the end of the string but the loop does not end,
 		// there is no matching string for this string.
@@ -152,16 +151,16 @@ unsigned int findString(const string *originString, char *foundString)
 	return sign;
 }
 
-string splitString(string *originString, const unsigned int start, const unsigned int end)
+string splitString(string *originString, const position start, const position end)
 {
 	/**
 	 * Cut the qualified string according to the position.
 	 */
 	
 	string finalString = initString();
-	for(unsigned int position=start; position<=end; position++)
+	for (position pos=start; pos<end; pos++)
 	{
-		addCharacter(&finalString, (originString->stringContent)[position]);
+		addCharacter(&finalString, (originString->stringContent)[pos]);
 	}
 
 	return finalString;
@@ -173,33 +172,44 @@ bool replaceString(string *originString, char *originElement, char *newElement)
 	 * Replace the specified content in the original string with another string.
 	 */
 	
-	int originElementIndex = 0;
-	string newString;
-	string followingString;
-
-	// Get the position of originElement string.
-	int originElementPosition = findString(originString, originElement);
-	if (originElementPosition == NO_FOUND) 
-		return false;
+	bool replacement = true;
+	string newString = initString();
+	string followingString = *originString;
+	position originElementLength = 0;
 	// Get the length of originElement string.
-	for (; originElement[originElementIndex] != '\0'; originElementIndex++);
-	// Split the string before originElement string.
-	if (originElementPosition == 0)
-		newString = initString();
+	for (; originElement[originElementLength] != '\0'; originElementLength++);
+
+	for (; ; )
+	{
+		position originElementPosition = findString(&followingString, originElement);
+		if (originElementPosition == NO_FOUND)
+		{
+			if (replacement == false) replacement = false;
+			break;
+		}
+
+		string frontString = splitString(&followingString, 0, originElementPosition);
+		addString(&newString, frontString.stringContent);
+		free(frontString.stringContent);
+		frontString.stringContent = NULL;
+		addString(&newString, newElement);
+
+		string oldFollowingString = followingString;
+		followingString = splitString(&followingString, originElementPosition+originElementLength, followingString.length);
+		free(oldFollowingString.stringContent);
+		oldFollowingString.stringContent = NULL;
+	}
+
+	if (replacement == true)
+	{
+		addString(&newString, followingString.stringContent);
+		*originString = newString;
+	}
 	else
-		newString = splitString(originString, 0, originElementPosition);
-	// Split the string after originElement string.
-	followingString = splitString(originString, originElementPosition+originElementIndex, (originString->length)-1);
-	// Splice string.
-	addString(&newString, newElement);
-	addString(&newString, followingString.stringContent);
-
-	// Free dynamic memory
-	free(followingString.stringContent);
-	free(originString->stringContent);
+	{
+		free(newString.stringContent);
+		newString.stringContent = NULL;
+	}
 	
-
-	*originString = newString;
-
-	return true;
+	return replacement;
 }
