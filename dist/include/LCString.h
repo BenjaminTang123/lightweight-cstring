@@ -1,5 +1,5 @@
 //! @file LCString.h
-//! Last Modified Date: August 24th, 2022
+//! Version: v0.5.0
 //! @author RobotBenjaminTang
 //! @brief Header file containing functions in this library.
 //!

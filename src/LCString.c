@@ -1,5 +1,5 @@
 /* File name: LCString.c
- * Last Modified Date: August 24th, 2022
+ * Version: v0.5.0
  * Author: RobotBenjaminTang
  * Description: implementation of all functions in the library.
 */ 
