@@ -1,8 +1,12 @@
 /* File name: LCString.c
  * Version: v0.5.0
- * Author: RobotBenjaminTang
+ * Author: Benjamin Tang(BenjainTang123)
  * Description: implementation of all functions in the library.
 */ 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 
 #include "lcstring.h"
 
@@ -12,39 +16,39 @@ string initString(void)
 	 * Initialize the string structure.
 	 */
 
-	string originString;
-	originString.length = 1; // Set length of string
-	originString.stringContent = (char*)malloc(originString.length*sizeof(char)); // Allocate dynamic memory
-	if (!originString.stringContent)
+	string str;
+	str.length = 1; // Set length of string
+	str.stringContent = (char*)malloc(str.length*sizeof(char)); // Allocate dynamic memory
+	if (!str.stringContent)
 	{
 		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
-	originString.stringContent[0] = '\0'; // End symbol
+	str.stringContent[0] = '\0'; // End symbol
 	
-	return originString;
+	return str;
 }
 
-void addCharacter(string *originString, char element)
+void addCharacter(string* str, char element)
 {
 	/**
 	 * Add new char to the origin string.
 	 */
 
-	originString->stringContent = (char*)realloc(originString->stringContent, (originString->length+1)*sizeof(char)); // Reallocate
-	if (!originString->stringContent)
+	str->stringContent = (char*)realloc(str->stringContent, (str->length+1)*sizeof(char)); // Reallocate
+	if (!str->stringContent)
 	{
 		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 	
-	originString->stringContent[originString->length-1] = element;
-	originString->stringContent[originString->length]   = '\0';
+	str->stringContent[str->length-1] = element;
+	str->stringContent[str->length]   = '\0';
 	
-	originString->length ++; // New length
+	str->length ++; // New length
 }
 
-void addString(string *originString, const char *element)
+void addString(string* str, char* element)
 {
 	/**
 	 * Add new string to the origin string.
@@ -52,8 +56,8 @@ void addString(string *originString, const char *element)
 
 	size_t length; const char *addElement = element;
 	for (length=0; *element!='\0'; element++) length ++;
-	originString->stringContent = (char*)realloc(originString->stringContent, (originString->length+length+1)*sizeof(char));
-	if (!originString->stringContent)
+	str->stringContent = (char*)realloc(str->stringContent, (str->length+length+1)*sizeof(char));
+	if (!str->stringContent)
 	{
 		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
@@ -61,33 +65,33 @@ void addString(string *originString, const char *element)
 
 	size_t i; for (i=-1; length>i+1; i++)
 	{
-		originString->stringContent[originString->length+i] = *addElement;
+		str->stringContent[str->length+i] = *addElement;
 		addElement ++; 
 	}
-	originString->stringContent[originString->length+i] = '\0';
-	originString->length += (i+1);
+	str->stringContent[str->length+i] = '\0';
+	str->length += (i+1);
 }
 
-inline size_t getLength(string *originString)
+inline size_t getLength(string* str)
 {
 	/**
 	 * Get string length.
 	 * Include \0.
 	 */
 
-	return originString->length;
+	return str->length;
 }
 
-inline char *getString(const string *originString)
+inline char* getString(string* str)
 {
 	/**
 	 * Get the string content.
 	 */
 	
-	return originString->stringContent;
+	return str->stringContent;
 }
 
-inline void clearString(string *originString)
+inline void clearString(string* str)
 {
 	/**
 	 * Clear the contents of the string.
@@ -95,33 +99,32 @@ inline void clearString(string *originString)
 	
 	string newstring = initString();
 
-	free(originString->stringContent);
-	originString->stringContent = NULL;
+	free(str->stringContent);
+	str->stringContent = NULL;
 
-	*originString = newstring;
+	*str = newstring;
 }
 
-inline string copyString(const string *originString)
+inline string copyString(string* str)
 {
 	/**
 	 * Copy string.
 	 */
 	
 	string newstr = initString();
-	addString(&newstr, originString->stringContent);
+	addString(&newstr, str->stringContent);
 	
 	return newstr;
 }
 
-
-position findString(const string *originString, char *foundString)
+position findString(string* str, char* foundString)
 {
 	/**
 	 * Used to locate a string in the original data to determine its location.
 	 */
 	
-	char *stringContent = originString->stringContent;
-	position length = originString->length;
+	char *stringContent = str->stringContent;
+	position length = str->length;
 
 	// Records the position when the stringContent matches the first character of the string to be searched.
 	position sign = NO_FOUND;
@@ -151,7 +154,7 @@ position findString(const string *originString, char *foundString)
 	return sign;
 }
 
-string splitString(string *originString, const position start, const position end)
+string splitString(string* str, const position start, const position end)
 {
 	/**
 	 * Cut the qualified string according to the position.
@@ -160,13 +163,13 @@ string splitString(string *originString, const position start, const position en
 	string finalString = initString();
 	for (position pos=start; pos<end; pos++)
 	{
-		addCharacter(&finalString, (originString->stringContent)[pos]);
+		addCharacter(&finalString, (str->stringContent)[pos]);
 	}
 
 	return finalString;
 }
 
-bool replaceString(string *originString, char *originElement, char *newElement)
+bool replaceString(string* str, char* pattern_to_match, char* pattern_to_replace)
 {
 	/**
 	 * Replace the specified content in the original string with another string.
@@ -174,28 +177,28 @@ bool replaceString(string *originString, char *originElement, char *newElement)
 	
 	bool replacement = true;
 	string newString = initString();
-	string followingString = *originString;
-	position originElementLength = 0;
+	string followingString = *str;
+	position originalStringLength = 0;
 	// Get the length of originElement string.
-	for (; originElement[originElementLength] != '\0'; originElementLength++);
+	for (; pattern_to_match[originalStringLength] != '\0'; originalStringLength++);
 
 	for (; ; )
 	{
-		position originElementPosition = findString(&followingString, originElement);
-		if (originElementPosition == NO_FOUND)
+		position originalStringPosition = findString(&followingString, pattern_to_match);
+		if (originalStringPosition == NO_FOUND)
 		{
 			if (replacement == false) replacement = false;
 			break;
 		}
 
-		string frontString = splitString(&followingString, 0, originElementPosition);
+		string frontString = splitString(&followingString, 0, originalStringPosition);
 		addString(&newString, frontString.stringContent);
 		free(frontString.stringContent);
 		frontString.stringContent = NULL;
-		addString(&newString, newElement);
+		addString(&newString, pattern_to_replace);
 
 		string oldFollowingString = followingString;
-		followingString = splitString(&followingString, originElementPosition+originElementLength, followingString.length);
+		followingString = splitString(&followingString, originalStringPosition+originalStringLength, followingString.length);
 		free(oldFollowingString.stringContent);
 		oldFollowingString.stringContent = NULL;
 	}
@@ -203,7 +206,7 @@ bool replaceString(string *originString, char *originElement, char *newElement)
 	if (replacement == true)
 	{
 		addString(&newString, followingString.stringContent);
-		*originString = newString;
+		*str = newString;
 	}
 	else
 	{
