@@ -1,5 +1,5 @@
 /* File name: LCString.c
- * Version: v0.5.0
+ * Version: v0.5.1
  * Author: Benjamin Tang(BenjainTang123)
  * Description: implementation of all functions in the library.
 */ 
@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <string.h>
+#include <stdarg.h>
 
 #include "lcstring.h"
 
@@ -26,6 +28,27 @@ string initString(void)
 	}
 	str.stringContent[0] = '\0'; // End symbol
 	
+	return str;
+}
+
+string formatString(const char* format, ...)
+{
+	/**
+	 * Obtain formatted string.
+	*/
+	va_list args;
+	va_start(args, format);
+	int length = vsnprintf(NULL, 0, format, args);
+	va_end(args);
+
+	string str = initString();
+	str.stringContent = (char*)realloc(str.stringContent, (length+1)*sizeof(char));
+	str.length = length;
+
+	va_start(args, format);
+	vsnprintf(str.stringContent, length+1, format, args);
+	va_end(args);
+
 	return str;
 }
 
@@ -103,6 +126,14 @@ inline void clearString(string* str)
 	str->stringContent = NULL;
 
 	*str = newstring;
+}
+
+inline void deleteString(string* str)
+{
+	/**
+	 * Delete the string object.
+	*/
+	free(str->stringContent);
 }
 
 inline string copyString(string* str)

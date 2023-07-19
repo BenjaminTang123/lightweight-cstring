@@ -1,6 +1,6 @@
 //! @file LCString.h
-//! Version: v0.5.0
-//! @author RobotBenjaminTang
+//! Version: v0.5.1
+//! @author Benjamin Tang(BenjaminTang123)
 //! @brief Header file containing functions in this library.
 //!
 
@@ -40,11 +40,6 @@ typedef struct String {
 	char* stringContent;
 
 	/**
-	 * To manage the actual allocated memory size.
-	 */
-	size_t capacity;
-
-	/**
 	 * The length of the string.
 	 */
 	size_t length;
@@ -62,6 +57,13 @@ string initString(void);
  * @param element The character to append.
  */
 void addCharacter(string* str, char element);
+
+/**
+ * Obtain formatted string.
+ * @param format The string that needs to be formatted.
+ * @param va_list Format parameters.
+*/
+string formatString(const char* format, ...);
 
 /**
  * Append a new c string to the end of the string object.
@@ -91,6 +93,12 @@ char* getString(string* str);
  * @param str The string object.
  */
 void clearString(string* str);
+
+/**
+ * Delete the string object
+ * @param str The string object.
+ */
+void deleteString(string* str);
 
 /**
  * Deep copies the string object.
