@@ -1,4 +1,5 @@
 # If compiling on Windows, the following lines may need to be changed to fit the system environment.
+
 CC = gcc
 CP = cp
 MKDIR = mkdir
@@ -6,15 +7,15 @@ RM = rm
 
 LIB_NAME = liblcstring.o
 SRC_DIR = src
-SRC = LCString.c
-HEADER = LCString.h
+SRC = lcstring.c
+HEADER = lcstring.h
 DIST_DIR = dist
 
 $(DIST_DIR)/$(LIB_NAME): $(DIST_DIR) $(SRC_DIR)/$(SRC) 
 	$(CC) -c -o $(DIST_DIR)/$(LIB_NAME) $(SRC_DIR)/$(SRC)
-	$(CP) $(SRC_DIR)/$(HEADER) $(DIST_DIR)/include/$(HEADER)
+	$(CP) $(SRC_DIR)/$(HEADER) $(DIST_DIR)/include/
 
-.PHONY:doxygen
+.PHONY: doxygen
 doxygen: doc $(DIST_DIR)/$(LIB_NAME)
 	doxygen -w html doc/header.html doc/footer.html doc/stylesheet.css
 	doxygen

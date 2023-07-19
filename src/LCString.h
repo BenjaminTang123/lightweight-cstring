@@ -109,6 +109,14 @@ string copyString(string* str);
 position findString(string* str, char* foundString);
 
 /**
+ * Find how many matching strings are in a string.
+ * @param str The string object.
+ * @param foundString The substring to count.
+ * @returns How many matching strings are there.
+*/
+size_t countString(string* str, char* foundString);
+
+/**
  * Get the substring of the given string object with a range [begin, end].
  * @param str The string object.
  * @param start The beginning of the closed-range.

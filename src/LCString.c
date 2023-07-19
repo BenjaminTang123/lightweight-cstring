@@ -154,6 +154,30 @@ position findString(string* str, char* foundString)
 	return sign;
 }
 
+size_t countString(string* str, char* foundString)
+{
+	/**
+	 * Find how many matching strings are in a string.
+	*/
+
+	char *stringContent = str->stringContent;
+	position length = str->length;
+
+	position sign = NO_FOUND;
+	size_t count = 0;
+	for (position index=0; index<length; index++) 
+	{
+		if (sign != NO_FOUND) 
+		{
+			if (foundString[index-sign] == '\0') count ++;
+			if (stringContent[index] != foundString[index-sign]) sign = NO_FOUND;
+		}
+		if (sign == NO_FOUND && stringContent[index] == *foundString) sign = index;
+	}
+
+	return count;
+}
+
 string splitString(string* str, const position start, const position end)
 {
 	/**
