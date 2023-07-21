@@ -20,35 +20,14 @@ string initString(void)
 
 	string str;
 	str.length = 1; // Set length of string
-	str.stringContent = (char*)malloc(str.length*sizeof(char)); // Allocate dynamic memory
+	str.stringContent = (char*)malloc(sizeof(char));
 	if (!str.stringContent)
 	{
 		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
-	str.stringContent[0] = '\0'; // End symbol
+	str.stringContent[0] = '\0';
 	
-	return str;
-}
-
-string formatString(const char* format, ...)
-{
-	/**
-	 * Obtain formatted string.
-	*/
-	va_list args;
-	va_start(args, format);
-	int length = vsnprintf(NULL, 0, format, args);
-	va_end(args);
-
-	string str = initString();
-	str.stringContent = (char*)realloc(str.stringContent, (length+1)*sizeof(char));
-	str.length = length;
-
-	va_start(args, format);
-	vsnprintf(str.stringContent, length+1, format, args);
-	va_end(args);
-
 	return str;
 }
 
@@ -71,28 +50,47 @@ void addCharacter(string* str, char element)
 	str->length ++; // New length
 }
 
-void addString(string* str, char* element)
+void addString(string* str, const char* format, ...)
 {
 	/**
 	 * Add new string to the origin string.
 	 */
+	
+	va_list args;
+    va_start(args, format);
 
-	size_t length; const char *addElement = element;
-	for (length=0; *element!='\0'; element++) length ++;
-	str->stringContent = (char*)realloc(str->stringContent, (str->length+length+1)*sizeof(char));
+    va_list args_copy;
+    va_copy(args_copy, args);
+
+	int length = vsnprintf(NULL, 0, format, args);
+	if (length < 0)
+	{
+		va_end(args);
+        va_end(args_copy);
+		printf("OSError: Failed to format string\n");
+		exit(1);
+	}
+
+	char* _buffer = (char*)malloc((length+1)*sizeof(char));
+	if (!_buffer)
+	{
+		va_end(args);
+        va_end(args_copy);
+		printf("OSError: Failed to format string\n");
+		exit(1);
+	}
+
+	vsnprintf(_buffer, length+1, format, args_copy);
+
+	str->stringContent = (char*)realloc(str->stringContent, (str->length+length)*sizeof(char));
 	if (!str->stringContent)
 	{
 		fprintf(stderr, "OSError: An unexpected error occurred at runtime!\n");
 		exit(0);
 	}
 
-	size_t i; for (i=-1; length>i+1; i++)
-	{
-		str->stringContent[str->length+i] = *addElement;
-		addElement ++; 
-	}
-	str->stringContent[str->length+i] = '\0';
-	str->length += (i+1);
+	size_t _i; for (_i=0; _i<=length; _i++) str->stringContent[str->length+_i-1] = _buffer[_i];
+	str->length += length;
 }
 
 inline size_t getLength(string* str)

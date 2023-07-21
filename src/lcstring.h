@@ -59,19 +59,13 @@ string initString(void);
 void addCharacter(string* str, char element);
 
 /**
- * Obtain formatted string.
- * @param format The string that needs to be formatted.
- * @param va_list Format parameters.
-*/
-string formatString(const char* format, ...);
-
-/**
  * Append a new c string to the end of the string object.
  * This won't change the C string itself.
  * @param str The string object.
  * @param element The C-string to append.
+ * @param va_list Format parameters.
  */
-void addString(string* str, char* element);
+void addString(string* str, const char* format, ...);
 
 /**
  * Get the length of a string object.
